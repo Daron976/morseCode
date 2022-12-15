@@ -1,4 +1,3 @@
-# puts "Hello, World!"
 
 LETTERS = {
   'A' => '.-', 'B' => '-...', 'C' => '-.-.', 'D' => '-..',
@@ -8,36 +7,40 @@ LETTERS = {
   'P' => '.--.', 'Q' => '--.-', 'R' => '.-.', 'S' => '...',
   'T' => '-', 'U' => '..-', 'V' => '...-', 'W' => '.--',
   'X' => '-..-', 'Y' => '-.--', 'Z' => '--..',
-  'zero' => '-----', 'one' => '.----',
-  'two' => '..---', 'three' => '...--',
-  'four' => '....-', 'five' => '.....', 'six' => '-....',
-  'seven' => '--...', 'eight' => '---..', 'nine' => '----.'
+  '0' => '-----', '1' => '.----',
+  '2' => '..---', '3' => '...--',
+  '4' => '....-', '5' => '.....', '6' => '-....',
+  '7' => '--...', '8' => '---..', '9' => '----.'
 }.freeze
 
-name = '.-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...'
+def decode_char(mose_code)
+  @phrase = []
+  @index = 0
+  mose_code_repl = mose_code.gsub('   ', '/')
+  @word_array = mose_code_repl.split('/')
 
-@phrase = []
-@index = 0
-name_repl = name.gsub('   ', '/')
-@word_array = name_repl.split('/')
-
-def test
-  @word = @word_array[@index].split
-  final = ''
-  @word_array.each_with_index do |_c, idx|
-    LETTERS.each do |key, val|
-      final += key if val == @word[idx]
+  def test
+    @word = @word_array[@index].split
+    final = ''
+    @word_array.each_with_index do |_c, idx|
+      LETTERS.each do |key, val|
+        final += key if val == @word[idx]
+      end
     end
+    @phrase.push(final).push(' ')
+    @index += 1
   end
-  @phrase.push(final).push(' ')
-  @index += 1
+
+  n = 0
+
+  while n < @word_array.length
+    test
+    n += 1
+  end
+
+  puts @phrase.join
+
 end
 
-n = 0
-
-while n < @word_array.length
-  test
-  n += 1
-end
-
-puts @phrase
+mose_code = '.-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...'
+decode_char(mose_code)
